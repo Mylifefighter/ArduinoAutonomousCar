@@ -49,42 +49,50 @@ void setup() {
     ** If FORWARD or BACKWARD do match the actual direction you vehicle
     ** goes, just switch the motor leads on the shield
     */
-    //This just quickly turns the motor on and off
-    driveMotor->run(FORWARD);
-    driveMotor->run(RELEASE);
 }
 
 void loop() {
     uint8_t i;
     
     //Make the drive motor go forward to top speed and then back down to zero
+    driveMotor->setSpeed(TURN_SPEED);
     driveMotor->run(FORWARD);
-    for (i=0; i<255; i++) {
-      driveMotor->setSpeed(i);  
-      delay(10);
-    }
-    for (i=255; i!=0; i--) {
-      driveMotor->setSpeed(i);  
-      delay(10);
-    }
+    delay(10000);
+    //Slow down the motor that way we don't kill it
+    driveMotor->setSpeed(200);
+    delay(10);
+    driveMotor->setSpeed(100);
+    delay(10);
+    driveMotor->setSpeed(50);
+    driveMotor->setSpeed(0);
+        
+    driveMotor->run(RELEASE);
 
     //Make the drive motor go backward to top speed and then back down to zero
+    driveMotor->setSpeed(TURN_SPEED);
     driveMotor->run(BACKWARD);
-    for (i=0; i<255; i++) {
-      driveMotor->setSpeed(i);  
-      delay(10);
-    }
-    for (i=255; i!=0; i--) {
-      driveMotor->setSpeed(i);  
-      delay(10);
-    }
+    delay(10000);
+    driveMotor->setSpeed(200);
+    delay(10);
+    driveMotor->setSpeed(100);
+    delay(10);
+    driveMotor->setSpeed(50);
+    driveMotor->setSpeed(0);
 
     //Completely stop the drive motor
     driveMotor->run(RELEASE);
-    
+
     //Turn the wheels
-    turnMotor->run(FORWARD);
-    delay(10);
+    turnMotor->setSpeed(TURN_SPEED);
+    turnMotor->run(FORWARD); //This should be a right hand turn
+    delay(1000);
+    turnMotor->setSpeed(200);
+    delay(5);
+    turnMotor->setSpeed(100);
+    delay(5);
+    turnMotor->setSpeed(50);
+    turnMotor->setSpeed(0);
+
     turnMotor->run(RELEASE);
     delay(1000);
 }
