@@ -37,6 +37,20 @@ void setup() {
       delay(250);
    }
    lcd.backlight();
+
+   /** Write chars to LCD **/
+   lcd.setCursor(3,0); //start at char 4 on line 0
+   lcd.print("This is working!");
+   delay(1000);
+   lcd.setCursor(3,1);
+   lcd.print("line # 2");
+   delay(1000);
+   lcd.setCursor(0,2);
+   lcd.print("line # 3");
+   delay(1000);
+   lcd.setCursor(0,3);
+   lcd.print("line # 4");
+   
 }
 /************* Loop *************/
 void loop() {
