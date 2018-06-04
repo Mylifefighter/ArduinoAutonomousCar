@@ -51,6 +51,7 @@ void setup() {
     */
 }
 
+/************* Loop *************/
 void loop() {
     uint8_t i;
     
