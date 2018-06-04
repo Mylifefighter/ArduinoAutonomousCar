@@ -18,19 +18,35 @@
 #include <Adafruit_Sensor.h>
 /** Using the Adafruit LSM303 library found here: https://github.com/adafruit/Adafruit_LSM303DLHC **/
 #include <Adafruit_LSM303_U.h>
+/** Using the New LiquidCrystal 1.3.5 library found here: https://bitbucket.org/fmalpartida/ **/
+#include <LiquidCrystal_I2C.h>
 
 /************* Globals *************/
+/** LCD **/
+/**Note: Most displays use I2C address 0x27 but a few use 0x3F**/
+//set the LCD address to 0x27 for 20 chars 4 line display
+/**
+ **
+ **                   addr, en,rw,rs,d4,d5,d6,d7,bl,blpol  **/
+LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
+
+/** Compass **/
 Adafruit_LSM303_Mag_Unified mag = Adafruit_LSM303_Mag_Unified(12334); //Create compass object with a unique id
 
 /************* Setup *************/
 void setup () {
-    Serial.begin(9600);
-    Serial.println("Compass Test\n");  
+    lcd.begin(20,4); //init display
+    lcd.backlight();
+    lcd.clear();
+    lcd.setCursor(3,0);
+    lcd.print("Compass Test");  
     
     //Attempt to initialize compass
     if(!mag.begin())
     {
-        Serial.println("Could not detect compass...check wiring");
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print("Could not detect compass...check wiring");
         while(1);
     }
 }
@@ -49,9 +65,12 @@ void loop() {
     //Normalize to 0-360
     if (heading < 0)
         heading = 360 + heading;
-    
-    Serial.print("Compass Heading: ");
-    Serial.println(heading);
+        
+    lcd.clear();
+    lcd.setCursor(3,0);
+    lcd.print("Compass Heading: ");
+    lcd.setCursor(3,2);
+    lcd.print(heading);
     delay(500);
 }
 
