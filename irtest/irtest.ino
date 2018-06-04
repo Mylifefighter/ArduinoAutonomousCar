@@ -4,7 +4,7 @@
 //=====================
 //Ping sensor (HC-SR04) = 5V, GND, D11 (for both trigger & echo)
 //LCD Display (LCM1602 IIC V1) = I2C : 5v, GND, SCL (A5) & SDA (A4)
-//Adafruit GPS Shield = D7 & D8 (Uses shield, so pins used internally)
+//Adafruit Ultimate GPS Logger Shield = D7 & D8 (Uses shield, so pins used internally)
 //IR Receiver (TSOP38238) = 5v, GND, D2
 //Adafruit Mini Remote Control for use with IR Receiver
 //Adafruit LSM303 Compass = TBD
@@ -20,6 +20,9 @@
 IRrecvPCI myReceiver(2); //create a reciever object to listen on pin 2
 
 IRdecodeNEC myDecoder; //create a decoder object that uses the NEC protocol of our miniremote
+
+/****** NOTE ******/
+//If using the Adafruit GPS Shield, make sure the switch next to the digital I/O is set to 'direct'
 
 /************* Setup *************/
 void setup() {
