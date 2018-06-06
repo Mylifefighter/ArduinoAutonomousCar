@@ -84,7 +84,7 @@ void loop() {
     driveMotor->run(RELEASE);
 
     //Turn the wheels
-    turnMotor->setSpeed(TURN_SPEED);
+    turnMotor->setSpeed(255);
     turnMotor->run(FORWARD); //This should be a right hand turn
     delay(1000);
     turnMotor->setSpeed(200);
