@@ -129,14 +129,12 @@ float currentLat,
       targetLong;
 int distanceToTarget,            // current distance to target (current waypoint)
     originalDistanceToTarget;    // distance to original waypoing when we started navigating to it
-    
-// Waypoints
-#define WAYPOINT_DIST_TOLERANCE  5   // tolerance in meters to waypoint; once within this tolerance, will advance to the next waypoint
-#define NUMBER_WAYPOINTS 10          // enter the numebr of way points here (will run from 0 to (n-1))
+
+   // Waypoints
+#define WAYPOINT_DIST_TOLERANCE  2   // tolerance in meters to waypoint; once within this tolerance, will advance to the next waypoint
+#define NUMBER_WAYPOINTS 5          // enter the numebr of way points here (will run from 0 to (n-1))
 int waypointNumber = -1;            // current waypoint number; will run from 0 to (NUMBER_WAYPOINTS -1); start at -1 and gets initialized during setup()
-waypointClass waypointList[NUMBER_WAYPOINTS] = {waypointClass(44.045808, 123.071446), waypointClass(44.045949, 123.071424), waypointClass(44.046054, 123.071476), waypointClass(44.046094, 123.071582), waypointClass(44.046083,123.071705),
-waypointClass(44.046009,123.071788), waypointClass(44.045834,123.071777), waypointClass(44.045715,123.071663), waypointClass(44.045726,123.071513), waypointClass(44.045808, 123.071446)};
-    
+waypointClass waypointList[NUMBER_WAYPOINTS] = {waypointClass(44.045808, -123.071446), waypointClass(44.045949, -123.071424), waypointClass(44.045726, -123.071513), waypointClass(44.046094, -123.071582), waypointClass(44.046083, -123.071705) };
 /** Motors **/
 //Create the motor shield objects
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
@@ -159,10 +157,10 @@ directions turnDirection = straight;
 #define STOP_DISTANCE 12
 
 //Motor speeds range: 0-255
-#define FAST_SPEED 150
-#define NORMAL_SPEED 125
-#define TURN_SPEED 100
-#define SLOW_SPEED 75
+#define FAST_SPEED 250
+#define NORMAL_SPEED 225
+#define TURN_SPEED 150
+#define SLOW_SPEED 100
 int speed = NORMAL_SPEED;
 
 /************* Setup *************/
@@ -222,7 +220,8 @@ void setup() {
          GPS.parse(GPS.lastNMEA());      
     delay(500);
   }
-    
+
+    waypointNumber = -1;   
    //Get initial waypoint
    nextWaypoint();
 }
@@ -455,7 +454,8 @@ void nextWaypoint(void)
   waypointNumber++;
   targetLat = waypointList[waypointNumber].getLat();
   targetLong = waypointList[waypointNumber].getLong();
-  
+
+  /**
   if ((targetLat == 0 && targetLong == 0) || waypointNumber >= NUMBER_WAYPOINTS)    // last waypoint reached? 
     {
       driveMotor->run(RELEASE);    // make sure we stop
@@ -464,7 +464,7 @@ void nextWaypoint(void)
       lcd.println(F("* LAST WAYPOINT *"));
       loopForever();
     }
-    
+    **/
    processGPS();
    distanceToTarget = originalDistanceToTarget = distanceToWaypoint();
    courseToWaypoint();

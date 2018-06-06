@@ -198,7 +198,6 @@ void setup() {
   useInterrupt(true);                            // use interrupt to constantly pull data from GPS
   delay(1000);
 
-/**
   //Wait for GPS to get signal
   lcd.setCursor(0, 0);
   lcd.print(F("Waiting for GPS"));
@@ -211,7 +210,6 @@ void setup() {
     if (GPS.newNMEAreceived())
       GPS.parse(GPS.lastNMEA());      
   } // while (!GPS.fix)
-  **/
 
   //Initiate countdown
   lcd.clear();
