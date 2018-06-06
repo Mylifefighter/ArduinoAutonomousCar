@@ -117,7 +117,7 @@ NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE_CM);  //create ping object
 MovingAverage<int, 3> sonarAverage(MAX_DISTANCE_IN);       // moving average of last n pings, initialize at MAX_DISTANCE_IN
 
 /** GPS **/
-#define GPSECHO false //for debugging
+#define GPSECHO true //for debugging
 SoftwareSerial mySerial(8, 7);  //digital pins used with shield
 Adafruit_GPS GPS(&mySerial);//GPS object
 //default settings
@@ -167,6 +167,9 @@ int speed = NORMAL_SPEED;
 
 /************* Setup *************/
 void setup() {
+  // turn on serial monitor 
+  Serial.begin(115200);        // we need this speed for the GPS
+  
   //Start LCD display
   lcd.begin(20,4);
   lcd.backlight();
@@ -195,6 +198,7 @@ void setup() {
   useInterrupt(true);                            // use interrupt to constantly pull data from GPS
   delay(1000);
 
+/**
   //Wait for GPS to get signal
   lcd.setCursor(0, 0);
   lcd.print(F("Waiting for GPS"));
@@ -207,6 +211,7 @@ void setup() {
     if (GPS.newNMEAreceived())
       GPS.parse(GPS.lastNMEA());      
   } // while (!GPS.fix)
+  **/
 
   //Initiate countdown
   lcd.clear();
@@ -609,6 +614,19 @@ void updateDisplay(void)
     lcd.print(waypointNumber + 1, DEC);
     lcd.print(F(" OF "));
     lcd.print(NUMBER_WAYPOINTS - 1, DEC);
+
+    Serial.print(F("LAT = "));
+    Serial.print(currentLat);
+    Serial.print(F(" LON = "));
+    Serial.println(currentLong);
+    Serial.print(F(" Dist "));
+    Serial.print(distanceToWaypoint());
+    Serial.print(F("Original Dist "));
+    Serial.println(originalDistanceToTarget);
+    Serial.print(F("Compass Heading "));
+    Serial.println(currentHeading);
+    Serial.print(F("GPS Heading "));
+    Serial.println(GPS.angle);
 
   } //  if (currentTime >= lastUpdate + 500 )
 
